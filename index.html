@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Update Plugin Integration Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            color: #333;
+            display: flex;
+        }
+        h1, h2, h3 {
+            color: #0044cc;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        h2 {
+            border-bottom: 2px solid #0044cc;
+            padding-bottom: 5px;
+        }
+        ul, ol {
+            margin: 20px 0;
+        }
+        ul li, ol li {
+            margin-bottom: 10px;
+        }
+        code, pre {
+            background-color: #f4f4f4;
+            border-radius: 5px;
+            padding: 2px 5px;
+        }
+        pre {
+            padding: 10px;
+            overflow-x: auto;
+            border-left: 3px solid #0044cc;
+        }
+        a {
+            color: #0044cc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin: 20px 0;
+        }
+        .important {
+            background-color: #ffeb3b;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .sidebar {
+            width: 25%;
+            padding-right: 20px;
+            border-right: 1px solid #ccc;
+        }
+        .content {
+            width: 75%;
+            padding-left: 20px;
+        }
+        .copy-button {
+            display: inline-block;
+            margin-left: 10px;
+            cursor: pointer;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .pre-container {
+            position: relative;
+            padding-right: 50px;
+        }
+        .pre-container pre {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h2>Sections</h2>
+            <ul>
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#benefits">Benefits</a></li>
+                <li><a href="#prerequisites">Prerequisites</a></li>
+                <li><a href="#installation-instructions">Installation Instructions</a></li>
+                <li><a href="#plugin-configuration">Plugin Configuration</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#support">Support</a></li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <h1>Amazon Update Plugin Integration Guide</h1>
+
+            <h2 id="introduction">Introduction</h2>
+            <p>The Amazon Update Plugin automates the process of submitting your APK to the Amazon Appstore. This guide will help you integrate the plugin into your Gradle build process, configure it for your project, and successfully upload your APKs to the Amazon Appstore.</p>
+
+            <h2 id="benefits">Benefits</h2>
+            <ul>
+                <li>Automates APK submission to Amazon Appstore</li>
+                <li>Handles authentication and token management seamlessly</li>
+                <li>Supports multiple API retries and caching for smoother updates</li>
+                <li>Fully configurable for different projects</li>
+            </ul>
+
+            <h2 id="prerequisites">Prerequisites</h2>
+            <ul>
+                <li>Java Development Kit (JDK) version 17 or higher</li>
+                <li>Gradle 6.7 or later</li>
+                <li>Amazon Appstore Developer account credentials</li>
+            </ul>
+
+            <h2 id="installation-instructions">Installation Instructions</h2>
+            
+            <h3>Step-by-Step Integration into the Application</h3>
+
+            <h3>Step 1: Adding the Plugin to Your Project</h3>
+            <ol>
+                <li>
+                    <p><strong>Create a <code>amazon-release.gradle</code> File in the <code>app/</code> Directory:</strong></p>
+                    <p>Add a file named <code>amazon-release.gradle</code> in your <code>app/</code> directory with the following content:</p>
+                    <div class="pre-container">
+                        <pre id="brightsdk-gradle"><code>buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.brightdata:amazon-update-gradle:1+'
+    }
+}
+
+apply plugin: com.brightdata.AmazonUpdatePlugin
+
+// your amazon credentials are required
+// for the plugin to work properly
+amazonUpdate {
+    clientId = 'YOUR_CLIENT_ID'
+    clientSecret = 'YOUR_CLIENT_SECRET'
+    releaseNotes = 'Bug fixes and improvements.'
+    apkPath = 'build/outputs/apk/release/app-release.apk'
+}
+</code></pre>
+                        <button class="copy-button" onclick="copyToClipboard('brightsdk-gradle')"><i class="fa-regular fa-clipboard"></i></button>
+                    </div>
+                </li>
+                <li>
+                    <p><strong>Register plugin in <code>app/build.gradle</code>:</strong></p>
+                    <p>Add the following lines to your <code>app/build.gradle</code> file:</p>
+                    <div class="pre-container">
+                        <pre id="build-gradle"><code>apply from: 'amazon-release.gradle'</code></pre>
+                        <button class="copy-button" onclick="copyToClipboard('build-gradle')"><i class="fa-regular fa-clipboard"></i></button>
+                    </div>
+                </li>
+            </ol>
+
+            <h3>Step 2: Verifying the Integration</h3>
+            <p>To upload your APK to the Amazon Appstore, run the following Gradle task:</p>
+            <div class="pre-container">
+                <pre id="gradle-release"><code>./gradlew releaseToAmazon</code></pre>
+                <button class="copy-button" onclick="copyToClipboard('gradle-release')"><i class="fa-regular fa-clipboard"></i></button>
+            </div>
+
+            <h3>Explanation:</h3>
+            <ul>
+                <li><strong><code>amazon-release.gradle</code> in <code>app/</code> Directory:</strong> This file contains the configuration and application of the Amazon Update Plugin.</li>
+                <li><strong>Register tasks:</strong> By adding the specified lines in <code>app/build.gradle</code>, you make plugin tasks available, so you can use them in your pipeline.</li>
+            </ul>
+            
+            <h2 id="plugin-configuration">Plugin Configuration</h2>
+
+            <h3>Basic Configuration</h3>
+            <p>Modify <code>brightsdk</code> configuration block values to override defaults:</p>
+            <ul>
+                <li><strong>clientId:</strong> Your Amazon Appstore client ID</li>
+                <li><strong>clientSecret:</strong> Your Amazon Appstore client secret</li>
+                <li><strong>releaseNotes:</strong> Release notes for the update</li>
+                <li><strong>apkPath:</strong> The path to your APK file</li>
+                <li><strong>cacheDir:</strong> Directory to store cached files (optional)</li>
+            </ul>
+
+            <h2 id="using-the-plugin">Using the Plugin</h2>
+
+            <h3>Checking for Updates</h3>
+            <p>The plugin will automatically check for the latest SDK version based on the provided configuration.</p>
+
+            <h3>Updating the Plugin</h3>
+            <p>If version is set to "latest", and a newer version is available, the plugin will download and replace the existing SDK files.</p>
+
+            <h3>Backward Compatibility</h3>
+            <p>The plugin supports backward compatibility with older SDK versions, allowing you to switch between versions as needed.</p>
+
+            <h2 id="documentation">Documentation</h2>
+            <p>For more detailed information, please refer to the <a href="https://vladislavs-luminati.github.io/bright-sdk-gradle-plugin-docs/com/brightdata/package-summary.html" target="_blank">Bright SDK Gradle Plugin Documentation</a>.</p>
+
+            <h2 id="best-practices">Best Practices</h2>
+            <ul>
+                <li><strong>Regular Updates:</strong> Run your gradle with <code>--refresh-dependencies</code> to keep your plugins up-to-date with the latest features and bugfixes.</li>
+            </ul>
+
+
+            <h2 id="faq">FAQ</h2>
+            <h3>Common Questions</h3>
+            <p>Here are some common questions and answers about the Bright SDK Update Plugin:</p>
+            <ul>
+                <li><strong>Q:</strong> What if my upload fails?<br><strong>A:</strong> Ensure your credentials are correct, and check for any error messages in the console. The plugin will retry automatically up to the configured number of retries.</li>
+                <li><strong>Q:</strong> How do I handle multiple APKs?<br><strong>A:</strong> The plugin is designed for single APK uploads. For multiple APKs, you'll need to configure separate tasks for each APK.</li>
+                <li><strong>Q:</strong> What should I do if I encounter issues?<br><strong>A:</strong> Check the <a href="https://vladislavs-luminati.github.io/amazon-update-gradle-plugin-docs/com/brightdata/package-summary.html" target="_blank">plugin documentation</a> and ensure you are using the latest version. If issues persist, contact support.</li>
+            </ul>
+
+            <h2 id="support">Support</h2>
+            <p>If you need further assistance, please contact our support team at <a href="mailto:sdk@brightdata.com">sdk@brightdata.com</a>.</p>
+
+            <h2 id="conclusion">Conclusion</h2>
+            <p>We hope this guide has helped you integrate the Bright SDK Update Plugin into your project. By following the steps outlined, you can ensure that your project always uses the latest version of the Bright SDK. If you have any questions or need further assistance, please refer to the documentation or contact our support team.</p>
+        </div>
+    </div>
+
+    <script>
+        function copyToClipboard(elementId) {
+            const pre = document.getElementById(elementId);
+            const text = pre.innerText;
+            const lineCount = text.split('\n').length;
+
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            alert(`Copied ${lineCount} line(s) to clipboard`);
+        }
+    </script>
+
+</body>
+</html>
