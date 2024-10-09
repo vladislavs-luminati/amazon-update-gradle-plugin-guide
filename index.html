@@ -139,7 +139,7 @@
                     <p><strong>Create a <code>amazon-release.gradle</code> File in the <code>app/</code> Directory:</strong></p>
                     <p>Add a file named <code>amazon-release.gradle</code> in your <code>app/</code> directory with the following content:</p>
                     <div class="pre-container">
-                        <pre id="brightsdk-gradle"><code>buildscript {
+                        <pre id="amazon-update-gradle"><code>buildscript {
     repositories {
         mavenCentral()
     }
@@ -159,7 +159,7 @@ amazonUpdate {
     apkPath = 'build/outputs/apk/release/app-release.apk'
 }
 </code></pre>
-                        <button class="copy-button" onclick="copyToClipboard('brightsdk-gradle')"><i class="fa-regular fa-clipboard"></i></button>
+                        <button class="copy-button" onclick="copyToClipboard('amazon-update-gradle')"><i class="fa-regular fa-clipboard"></i></button>
                     </div>
                 </li>
                 <li>
@@ -188,7 +188,7 @@ amazonUpdate {
             <h2 id="plugin-configuration">Plugin Configuration</h2>
 
             <h3>Basic Configuration</h3>
-            <p>Modify <code>brightsdk</code> configuration block values to override defaults:</p>
+            <p>Modify <code>amazonUpdate</code> configuration block values to override defaults:</p>
             <ul>
                 <li><strong>clientId:</strong> Your Amazon Appstore client ID</li>
                 <li><strong>clientSecret:</strong> Your Amazon Appstore client secret</li>
